@@ -32,7 +32,7 @@
       return args.string1 + args.string2;
     }
     commandtest(args, util) {
-      console.log(Scratch, util.target);
+      console.log(Scratch, util);
     }
   }
   Scratch.extensions.register(new test_ext());
