@@ -54,7 +54,7 @@
           {
             opcode: 'StringStartsEndsWith',
             blockType: Scratch.BlockType.BOOLEAN,
-            text: '[string] starts or ends with [string2]?',
+            text: '[string] starts [menu] ends with [string2]?',
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
@@ -63,6 +63,10 @@
               string2: {
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: 'i'
+              },
+              menu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'OR_AND'
               }
             }
           },
@@ -85,6 +89,7 @@
             opcode: 'UnicodeAtString',
             blockType: Scratch.BlockType.REPORTER,
             text: 'unicode of letter #[number] of [string]',
+            hideFromPalette: true,
             arguments: {
               number: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -97,9 +102,20 @@
             }
           },
           {
+            opcode: 'UnicodeOfLetter',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'unicode of letter [letter]',
+            arguments: {
+              letter: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'A'
+              }
+            }
+          },
+          {
             opcode: 'CharacterFromUnicode',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'character from unicode [unicode]',
+            text: 'letter from unicode [unicode]',
             arguments: {
               unicode: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -289,6 +305,7 @@
             opcode: 'HasFromArray',
             blockType: Scratch.BlockType.BOOLEAN,
             text: '[string] contains from array [array]?',
+            hideFromPalette: true,
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
@@ -298,8 +315,7 @@
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: '["f","e"]'
               }
-            },
-            hideFromPalette: true
+            }
           },
           {
             opcode: 'ToUnicodeArray',
@@ -333,6 +349,10 @@
           CASE_CHANGE: {
             acceptReporters: true,
             items: ['lowercase','UPPERCASE','mIxEd CaSe','random case','Title Case']
+          },
+          OR_AND: {
+            acceptReporters: true,
+            items: ['or','and']
           }
         }
       };
@@ -369,6 +389,9 @@
     UnicodeAtString(args) {
       return (args.string).codePointAt(args.number - 1);
     }
+    UnicodeOfLetter(args) {
+      return (args.letter).codePointAt(0);
+    }
     StringEndsWith(args) {
       return (args.string).endsWith(args.string2);
     }
@@ -377,7 +400,14 @@
     }
     StringStartsEndsWith(args) {
       const str1 = args.string; const str2 = args.string2
-      return str1.endsWith(str2) || str1.startsWith(str2);
+      const menu = args.menu;
+      if (menu == 'or') {
+        return str1.endsWith(str2) || str1.startsWith(str2);
+      } else if (menu == 'and') {
+        return str1.endsWith(str2) && str1.startsWith(str2);
+      } else { 
+        return false; 
+      }
     }
     CharacterFromUnicode(args) {
       return String.fromCharCode(args.unicode);
