@@ -176,6 +176,29 @@
             }
           },
           {
+            opcode: 'ReplaceNumber',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'in [string] replace #[number] [string2] with [string3]',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'abc abc'
+              },
+              string2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'abc'
+              },
+              string3: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'def'
+              },
+              number: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2
+              }
+            }
+          },
+          {
             opcode: 'SliceText',
             blockType: Scratch.BlockType.REPORTER,
             text: 'slice [string] from [number] to [number2]',
@@ -370,6 +393,16 @@
     }
     ReplaceAll(args) {
       return (args.string).replaceAll(args.string2, args.string3);
+    }
+    ReplaceNumber(args) {
+      var count = 0;
+      return (args.string).replace(new RegExp(args.string2, 'g'), function(match) {
+        count++;
+        if (count === args.number) {
+            return (args.string3);
+        }
+        return match;
+      });
     }
     SliceText(args) {
       return (args.string).slice(args.number - 1, args.number2);
