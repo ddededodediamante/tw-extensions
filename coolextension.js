@@ -15,7 +15,7 @@
       };
     }
     cheddarcheese() {
-      return 5.846;
+      return 6.084;
     }
   }
   Scratch.extensions.register(new cool_ext());
