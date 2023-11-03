@@ -4,7 +4,7 @@
       return {
         id: 'coolextension',
         name: 'Cool Extension',
-        color1: #ffdc69,
+        color1: '#ffdc69',
         blocks: [
           {
             opcode: 'cheddarcheese',
