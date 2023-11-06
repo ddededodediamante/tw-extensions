@@ -1,6 +1,8 @@
 (function(Scratch) {
   //Made by ddededodediamante
-  //Do not remove these comments
+  const rightIcon = 'https://turbowarp.org/static/blocks-media/rotate-right.svg';
+  const leftIcon = 'https://turbowarp.org/static/blocks-media/rotate-left.svg';
+  const motion = Scratch.vm.runtime.ext_scratch3_motion;
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Extension must run unsandboxed!');
   }
@@ -16,7 +18,22 @@
           {
             opcode: 'logsprite',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'log stuff'
+            text: 'log target and util'
+          },
+          {
+            opcode: 'movestepsprite',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'move[spritemenu][amount]steps',
+            arguments: {
+              amount: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 10
+              },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites',
+              }
+            }
           },
           {
             opcode: 'changexory',
@@ -95,6 +112,21 @@
             }
           },
           {
+            opcode: 'changesizesprite',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'change[spritemenu]size by[size]%',
+            arguments: {
+              size: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 10
+              },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites',
+              }
+            }
+          },
+          {
             opcode: 'setsizesprite',
             blockType: Scratch.BlockType.COMMAND,
             text: 'set[spritemenu]size to[size]%',
@@ -110,20 +142,43 @@
             }
           },
           {
-            opcode: 'changesizesprite',
+            opcode: 'turnspriteright',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'change[spritemenu]size by[size]%',
+            text: 'turn[spritemenu] [image] [amount]degrees',
             arguments: {
-              size: {
+              amount: {
                 type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 10
+                defaultValue: 15
+              },
+              image: {
+                type: Scratch.ArgumentType.IMAGE,
+                dataURI: rightIcon
               },
               spritemenu: {
                 type: Scratch.ArgumentType.STRING,
-                menu: 'sprites',
+                menu: 'sprites'
               }
             }
-          }
+          },
+          {
+            opcode: 'turnspriteleft',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'turn[spritemenu] [image] [amount]degrees',
+            arguments: {
+              amount: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 15
+              },
+              image: {
+                type: Scratch.ArgumentType.IMAGE,
+                dataURI: leftIcon
+              },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
+              }
+            }
+          },
         ],
         menus: {
           sprites: {
@@ -152,6 +207,12 @@
     }
     logsprite(args, util) {
       console.log(util.target, util);
+    }
+    movestepsprite(args, util) {
+      const target = spritebyname(args.spritemenu)
+      if (target == null) { return; }
+      const amount = Scratch.Cast.toNumber(args.amount)
+      motion._moveSteps(amount, target)
     }
     changexory(args, util) {
       const target = spritebyname(args.spritemenu)
@@ -196,6 +257,18 @@
       if (target == null) { return; }
       const size = Scratch.Cast.toNumber(args.size)
       target.setSize(target.size+size)
+    }
+    turnspriteright(args, util) {
+      const target = spritebyname(args.spritemenu)
+      if (target == null) { return; }
+      const amount = Scratch.Cast.toNumber(args.amount)
+      target.setDirection(target.direction+amount)
+    }
+    turnspriteleft(args, util) {
+      const target = spritebyname(args.spritemenu)
+      if (target == null) { return; }
+      const amount = Scratch.Cast.toNumber(args.amount)
+      target.setDirection(target.direction-amount)
     }
   }
   Scratch.extensions.register(new extension());
