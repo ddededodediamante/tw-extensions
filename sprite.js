@@ -3,6 +3,7 @@
   const rightIcon = 'https://turbowarp.org/static/blocks-media/rotate-right.svg';
   const leftIcon = 'https://turbowarp.org/static/blocks-media/rotate-left.svg';
   const motion = Scratch.vm.runtime.ext_scratch3_motion;
+  const looks = Scratch.vm.runtime.ext_scratch3_looks;
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Extension must run unsandboxed!');
   }
@@ -20,6 +21,12 @@
             blockType: Scratch.BlockType.COMMAND,
             text: 'log target and util'
           },
+          {
+            opcode: 'getrandomsprite',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'random sprite'
+          },
+          '---',
           {
             opcode: 'movestepsprite',
             blockType: Scratch.BlockType.COMMAND,
@@ -179,6 +186,21 @@
               }
             }
           },
+          {
+            opcode: 'spritesay',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'sprite[spritemenu]say[speak]',
+            arguments: {
+              speak: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 'Hello!'
+              },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
+              }
+            }
+          },
         ],
         menus: {
           sprites: {
@@ -208,6 +230,11 @@
     logsprite(args, util) {
       console.log(util.target, util);
     }
+    getrandomsprite() {
+      const sprites = this.allsprites();
+      const array = sprites.map(obj => obj.value);
+      return array[Math.floor(Math.random() * array.length)];
+    }
     movestepsprite(args, util) {
       const target = spritebyname(args.spritemenu)
       if (target == null) { return; }
@@ -225,9 +252,9 @@
       }
     }
     setxory(args, util) {
-      const target = spritebyname(args.spritemenu)
+      const target = spritebyname(args.spritemenu);
       if (target == null) { return; }
-      const amount = Scratch.Cast.toNumber(args.amount)
+      const amount = Scratch.Cast.toNumber(args.amount);
       if (args.menu == 'x') {
         target.setXY(amount, target.y)
       } else if (args.menu == 'y') {
@@ -235,40 +262,46 @@
       }
     }
     changexy(args, util) {
-      const target = spritebyname(args.spritemenu)
+      const target = spritebyname(args.spritemenu);
       if (target == null) { return; }
-      const amounts = [Scratch.Cast.toNumber(args.x),Scratch.Cast.toNumber(args.y)]
+      const amounts = [Scratch.Cast.toNumber(args.x),Scratch.Cast.toNumber(args.y)];
       target.setXY(target.x+amounts[0], target.y+amounts[1])
     }
     setxy(args, util) {
-      const target = spritebyname(args.spritemenu)
+      const target = spritebyname(args.spritemenu);
       if (target == null) { return; }
-      const amounts = [Scratch.Cast.toNumber(args.x),Scratch.Cast.toNumber(args.y)]
+      const amounts = [Scratch.Cast.toNumber(args.x),Scratch.Cast.toNumber(args.y)];
       target.setXY(amounts[0], amounts[1])
     }
     setsizesprite(args, util) {
-      const target = spritebyname(args.spritemenu)
+      const target = spritebyname(args.spritemenu);
       if (target == null) { return; }
-      const size = Scratch.Cast.toNumber(args.size)
+      const size = Scratch.Cast.toNumber(args.size);
       target.setSize(size)
     }
     changesizesprite(args, util) {
-      const target = spritebyname(args.spritemenu)
+      const target = spritebyname(args.spritemenu);
       if (target == null) { return; }
-      const size = Scratch.Cast.toNumber(args.size)
+      const size = Scratch.Cast.toNumber(args.size);
       target.setSize(target.size+size)
     }
     turnspriteright(args, util) {
-      const target = spritebyname(args.spritemenu)
+      const target = spritebyname(args.spritemenu);
       if (target == null) { return; }
-      const amount = Scratch.Cast.toNumber(args.amount)
+      const amount = Scratch.Cast.toNumber(args.amount);
       target.setDirection(target.direction+amount)
     }
     turnspriteleft(args, util) {
       const target = spritebyname(args.spritemenu)
       if (target == null) { return; }
-      const amount = Scratch.Cast.toNumber(args.amount)
+      const amount = Scratch.Cast.toNumber(args.amount);
       target.setDirection(target.direction-amount)
+    }
+    spritesay(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (target == null) { return; }
+      const speak = Scratch.Cast.toString(args.speak);
+      looks._say(speak,target);
     }
   }
   Scratch.extensions.register(new extension());
