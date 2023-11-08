@@ -23,16 +23,25 @@
             blockType: Scratch.BlockType.COMMAND,
             text: 'log target and util'
           },
+          '---',
           {
             opcode: 'getrandomsprite',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'random sprite'
+            text: 'random sprite',
+            disableMonitor: true
+          },
+          {
+            opcode: 'getcurrentsprite',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'current sprite',
+            disableMonitor: true,
+            filter: [Scratch.TargetType.SPRITE]
           },
           '---',
           {
             opcode: 'movestepsprite',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'move[spritemenu][amount]steps',
+            text: 'move [spritemenu] [amount] steps',
             arguments: {
               amount: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -47,7 +56,7 @@
           {
             opcode: 'changexory',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'change[spritemenu][menu]by[amount]',
+            text: 'change [spritemenu] [menu] by [amount]',
             arguments: {
               amount: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -66,7 +75,7 @@
           {
             opcode: 'setxory',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'set[spritemenu][menu]to[amount]',
+            text: 'set [spritemenu] [menu] to [amount]',
             arguments: {
               amount: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -85,7 +94,7 @@
           {
             opcode: 'changexy',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'change[spritemenu]x[x]y[y]',
+            text: 'change [spritemenu] x [x] y [y]',
             arguments: {
               x: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -104,7 +113,7 @@
           {
             opcode: 'setxy',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'set[spritemenu]to x[x]y[y]',
+            text: 'set [spritemenu] to x [x] y [y]',
             arguments: {
               x: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -123,7 +132,7 @@
           {
             opcode: 'changesizesprite',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'change[spritemenu]size by[size]%',
+            text: 'change [spritemenu] size by [size]%',
             arguments: {
               size: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -138,7 +147,7 @@
           {
             opcode: 'setsizesprite',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'set[spritemenu]size to[size]%',
+            text: 'set [spritemenu] size to [size]%',
             arguments: {
               size: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -153,7 +162,7 @@
           {
             opcode: 'turnspriteright',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'turn[spritemenu] [image] [amount]degrees',
+            text: 'turn [spritemenu] [image] [amount] degrees',
             arguments: {
               amount: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -172,7 +181,7 @@
           {
             opcode: 'turnspriteleft',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'turn[spritemenu] [image] [amount]degrees',
+            text: 'turn [spritemenu] [image] [amount] degrees',
             arguments: {
               amount: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -191,7 +200,7 @@
           {
             opcode: 'spritesay',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'sprite[spritemenu]say[speak]',
+            text: 'sprite [spritemenu] say [speak]',
             arguments: {
               speak: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -206,12 +215,23 @@
           {
             opcode: 'spritegreenflag',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'send[image]to[spritemenu]',
+            text: 'send [image] to [spritemenu]',
             arguments: {
               image: {
                 type: Scratch.ArgumentType.IMAGE,
                 dataURI: greenFlag
               },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
+              }
+            }
+          },
+          {
+            opcode: 'spriteclickevent',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'click sprite [spritemenu]',
+            arguments: {
               spritemenu: {
                 type: Scratch.ArgumentType.STRING,
                 menu: 'sprites'
@@ -251,6 +271,9 @@
       const sprites = this.allsprites();
       const array = sprites.map(obj => obj.value);
       return array[Math.floor(Math.random() * array.length)];
+    }
+    getcurrentsprite(args, util) {
+      return util.target.getName();
     }
     movestepsprite(args, util) {
       const target = spritebyname(args.spritemenu)
@@ -324,6 +347,11 @@
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       Scratch.vm.runtime.startHats('event_whenflagclicked', {}, target);
+    }
+    spriteclickevent(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (!target) { return; }
+      Scratch.vm.runtime.startHats('event_whenthisspriteclicked', {}, target);
     }
   }
   Scratch.extensions.register(new extension());
