@@ -2,6 +2,7 @@
   //Made by ddededodediamante
   const rightIcon = 'https://turbowarp.org/static/blocks-media/rotate-right.svg';
   const leftIcon = 'https://turbowarp.org/static/blocks-media/rotate-left.svg';
+  const greenFlag = 'https://turbowarp.org/static/blocks-media/green-flag.svg';
   const motion = Scratch.vm.runtime.ext_scratch3_motion;
   const looks = Scratch.vm.runtime.ext_scratch3_looks;
   if (!Scratch.extensions.unsandboxed) {
@@ -202,6 +203,21 @@
               }
             }
           },
+          {
+            opcode: 'spritegreenflag',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'send[image]to[spritemenu]',
+            arguments: {
+              image: {
+                type: Scratch.ArgumentType.IMAGE,
+                dataURI: greenFlag
+              },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
+              }
+            }
+          }
         ],
         menus: {
           sprites: {
@@ -303,6 +319,11 @@
       if (!target) { return; }
       const speak = Scratch.Cast.toString(args.speak);
       looks._say(speak,target);
+    }
+    spritegreenflag(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (!target) { return; }
+      Scratch.vm.runtime.startHats('event_whenflagclicked', {}, target);
     }
   }
   Scratch.extensions.register(new extension());
