@@ -216,6 +216,21 @@
             }
           },
           {
+            opcode: 'spritethink',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'sprite [spritemenu] think [think]',
+            arguments: {
+              think: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 'Hmm...'
+              },
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
+              }
+            }
+          },
+          {
             opcode: 'spritegreenflag',
             blockType: Scratch.BlockType.COMMAND,
             text: 'emit [image] to [spritemenu]',
@@ -249,6 +264,28 @@
               spritemenu: {
                 type: Scratch.ArgumentType.STRING,
                 menu: 'spritesStage'
+              }
+            }
+          },
+          {
+            opcode: 'spritedraggable',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'is [spritemenu] draggable?',
+            arguments: {
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
+              }
+            }
+          },
+          {
+            opcode: 'spritedragging',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'dragging [spritemenu]?',
+            arguments: {
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'sprites'
               }
             }
           },
@@ -369,6 +406,12 @@
       const speak = Scratch.Cast.toString(args.speak);
       looks._say(speak,target);
     }
+    spritethink(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (!target) { return; }
+      const think = Scratch.Cast.toString(args.think);
+      Scratch.vm.runtime.emit('SAY', target, 'think', think);
+    }
     spritegreenflag(args, util) {
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
@@ -387,6 +430,16 @@
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       Scratch.vm.runtime.stopForTarget(target);
+    }
+    spritedraggable(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (!target) { return; }
+      return target.draggable;
+    }
+    spritedragging(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (!target) { return; }
+      return target.dragging;
     }
   }
   Scratch.extensions.register(new extension());
