@@ -9,8 +9,11 @@
     throw new Error('Extension must run unsandboxed!');
   }
   function spritebyname(name) {
-    const target = Scratch.vm.runtime.getSpriteTargetByName(name);
-    return target;
+    if (name == '_stage_') {
+      return Scratch.vm.runtime.getTargetForStage();
+    } else {
+      return Scratch.vm.runtime.getSpriteTargetByName(name);
+    }
   }
   class extension {
     getInfo() {
@@ -215,7 +218,7 @@
           {
             opcode: 'spritegreenflag',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'send [image] to [spritemenu]',
+            text: 'emit [image] to [spritemenu]',
             arguments: {
               image: {
                 type: Scratch.ArgumentType.IMAGE,
@@ -223,26 +226,41 @@
               },
               spritemenu: {
                 type: Scratch.ArgumentType.STRING,
-                menu: 'sprites'
+                menu: 'spritesStage'
               }
             }
           },
           {
             opcode: 'spriteclickevent',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'click sprite [spritemenu]',
+            text: 'emit click to [spritemenu]',
             arguments: {
               spritemenu: {
                 type: Scratch.ArgumentType.STRING,
-                menu: 'sprites'
+                menu: 'spritesStage'
               }
             }
-          }
+          },
+          {
+            opcode: 'stopsprite',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'stop [spritemenu]',
+            arguments: {
+              spritemenu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'spritesStage'
+              }
+            }
+          },
         ],
         menus: {
           sprites: {
             acceptReporters: true,
             items: 'allsprites'
+          },
+          spritesStage: {
+            acceptReporters: true,
+            items: 'allspritesStage'
           },
           xy: {
             acceptReporters: true,
@@ -259,10 +277,18 @@
         const sprite = targets[i];
         if (sprite.isOriginal) {
           const name = sprite.getName();
-          array.push({ text: name, value: name });
+          array.push({ text:name, value:name });
         }
       }
       return array;
+    }
+    allspritesStage() {
+      const array = [{ text:'Stage', value:'_stage_'}];
+      const sprites = this.allsprites();
+      if (sprites == ['No sprites.']) {
+        return array;
+      } 
+      return array.concat(sprites);
     }
     logsprite(args, util) {
       console.log(util.target, util);
@@ -346,12 +372,21 @@
     spritegreenflag(args, util) {
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
-      Scratch.vm.runtime.startHats('event_whenflagclicked', {}, target);
+      util.startHats('event_whenflagclicked', {}, target);
     }
     spriteclickevent(args, util) {
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
-      Scratch.vm.runtime.startHats('event_whenthisspriteclicked', {}, target);
+      if (args.spritemenu == '_stage_') {
+        util.startHats('event_whenstageclicked');
+      } else {
+        util.startHats('event_whenthisspriteclicked', {}, target);
+      }
+    }
+    stopsprite(args, util) {
+      const target = spritebyname(args.spritemenu);
+      if (!target) { return; }
+      Scratch.vm.runtime.stopForTarget(target);
     }
   }
   Scratch.extensions.register(new extension());
