@@ -24,7 +24,18 @@
             opcode: 'commandtest',
             blockType: Scratch.BlockType.COMMAND,
             text: 'log scratch and target'
-          }
+          },
+          {
+            opcode: 'ifremake',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'if [condition] then',
+            branchCount: 1,
+            arguments: {
+              condition: {
+                type: Scratch.ArgumentType.BOOLEAN
+              }
+            }
+          },
         ]
       };
     }
@@ -33,6 +44,12 @@
     }
     commandtest(args, util) {
       console.log(Scratch, util);
+    }
+    ifremake(args, util) {
+      const condition = Scratch.Cast.toBoolean(args.condition);
+      if (condition) {
+        util.startBranch(1, false);
+      }
     }
   }
   Scratch.extensions.register(new test_ext());
