@@ -368,7 +368,7 @@
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: 'hey'
               },
-              strin2: {
+              string2: {
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: 'bye'
               }
