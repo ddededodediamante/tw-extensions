@@ -357,7 +357,22 @@
           {
             opcode: 'Newline',
             blockType: Scratch.BlockType.REPORTER,
-            text: '\\n'
+            text: 'newline'
+          },
+          {
+            opcode: 'NewlineJoin',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'join [string] \\n [string2]',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hey'
+              },
+              strin2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'bye'
+              }
+            }
           }
         ],
         menus: {
@@ -496,6 +511,8 @@
     Newline() {
       return '\n';
     }
+    NewlineJoin(args) {
+      return args.string + '\n' + args.string2;
   }
   Scratch.extensions.register(new stringthings());
 })(Scratch);
