@@ -22,6 +22,21 @@
             }
           },
           {
+            opcode: 'StringExactlyEquals',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: '[string] exactly equals [string2]?',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'Hello'
+              },
+              string2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hello'
+              }
+            }
+          },
+          {
             opcode: 'StringEndsWith',
             blockType: Scratch.BlockType.BOOLEAN,
             text: '[string] ends with [string2]?',
@@ -391,6 +406,9 @@
     }
     UnicodeOfLetter(args) {
       return (args.letter).codePointAt(0);
+    }
+    StringExactlyEquals(args) {
+      return args.string === args.string2;
     }
     StringEndsWith(args) {
       return (args.string).endsWith(args.string2);
