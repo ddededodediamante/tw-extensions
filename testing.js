@@ -28,7 +28,7 @@
           {
             opcode: 'ifremake',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'if [condition] then',
+            text: 'if [condition] then\ndo',
             branchCount: 1,
             arguments: {
               condition: {
