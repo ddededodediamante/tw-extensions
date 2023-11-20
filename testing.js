@@ -28,8 +28,8 @@
           {
             opcode: 'ifremake',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'if [condition] then\nelse',
-            branchCount: 2,
+            text: 'if [condition] then',
+            branchCount: 1,
             arguments: {
               condition: {
                 type: Scratch.ArgumentType.BOOLEAN
@@ -49,8 +49,6 @@
       const condition = Scratch.Cast.toBoolean(args.condition);
       if (condition) {
         util.startBranch(1, false);
-      } else {
-        util.startBranch(2, false);
       }
     }
   }
