@@ -513,6 +513,7 @@
     }
     NewlineJoin(args) {
       return args.string + '\n' + args.string2;
+    }
   }
   Scratch.extensions.register(new stringthings());
 })(Scratch);
