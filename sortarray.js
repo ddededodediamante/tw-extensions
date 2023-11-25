@@ -107,8 +107,8 @@
       return JSON.stringify(array);
     }
     sortReversedOf(args) {
-      const array1 = JSON.parse(args.array1).reverse()
-      const array2 = JSON.parse(args.array2)
+      const array1 = JSON.parse(args.array1).reverse().join()
+      const array2 = JSON.parse(args.array2).join()
       return array1 == array2;
     }
   }
