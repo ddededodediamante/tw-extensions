@@ -100,11 +100,9 @@
     }
     sortShuffle(args) {
       const array = JSON.parse(args.array);
-      const originalIndices = array.map((_, index) => index);
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[originalIndices[i]], array[originalIndices[j]]];
-        [originalIndices[i], originalIndices[j]] = [originalIndices[j], originalIndices[i]];
+        [array[i], array[j]] = [array[j], array[i]];
       }
       return JSON.stringify(array);
     }
