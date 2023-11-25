@@ -50,17 +50,6 @@
             }
           },
           {
-            opcode: 'sortShuffle',
-            blockType: Scratch.BlockType.REPORTER,
-            text: 'shuffle array [array]',
-            arguments: {
-              array: {
-                type: Scratch.ArgumentType.STRING,
-                defaultValue: '["a",1,"b",2]'
-              }
-            }
-          },
-          {
             opcode: 'sortReverse',
             blockType: Scratch.BlockType.REPORTER,
             text: 'reverse array [array]',
@@ -97,18 +86,6 @@
     sortRandom(args) {
       const array = JSON.parse(args.array).sort(() => Math.random() - 0.5)
       return JSON.stringify(array);
-    }
-    sortShuffle(args) {
-      const array = JSON.parse(args.array);
-      const shuffledArray = [...array];
-      for (let i = shuffledArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-      }
-      while (shuffledArray.some((value, index) => value === array[index])) {
-        shuffleArray(shuffledArray);
-      }
-      return JSON.stringify(shuffledArray);
     }
     sortReverse(args) {
       const array = JSON.parse(args.array).reverse()
