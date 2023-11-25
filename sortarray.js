@@ -59,6 +59,21 @@
                 defaultValue: '["a",1,"b",2]'
               }
             }
+          },
+          {
+            opcode: 'sortReversedOf',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'is [array1] reversed of [array2]?',
+            arguments: {
+              array1: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["c","b","a"]'
+              },
+              array2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '["a","b","c"]'
+              }
+            }
           }
         ],
         menus: {
@@ -91,6 +106,10 @@
       const array = JSON.parse(args.array).reverse()
       return JSON.stringify(array);
     }
+    sortReversedOf(args) {
+      const array1 = JSON.parse(args.array1).reverse()
+      const array2 = JSON.parse(args.array2)
+      return array1 == array2;
   }
   Scratch.extensions.register(new arraySorting());
 })(Scratch);
