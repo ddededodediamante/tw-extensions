@@ -99,10 +99,12 @@
       return JSON.stringify(array);
     }
     sortShuffle(args) {
-      let array = JSON.parse(args.array);
-      const isShuffled = (a, b, i) => a !== b[i];
-      while (array.some((value, index) => isShuffled(value, array, index))) {
-        array.sort(() => Math.random() - 0.5);
+      const array = JSON.parse(args.array);
+      const originalIndices = array.map((_, index) => index);
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[originalIndices[i]], array[originalIndices[j]]];
+        [originalIndices[i], originalIndices[j]] = [originalIndices[j], originalIndices[i]];
       }
       return JSON.stringify(array);
     }
