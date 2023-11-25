@@ -99,7 +99,7 @@
       return JSON.stringify(array);
     }
     sortShuffle(args) {
-      const array = JSON.parse(args.array)
+      const array = JSON.parse(args.array);
       const isShuffled = (a, b, i) => a !== b[i];
       while (array.some((value, index) => isShuffled(value, array, index))) {
         array.sort(() => Math.random() - 0.5);
