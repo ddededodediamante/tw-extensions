@@ -2,7 +2,7 @@
   class arraySorting {
     getInfo() {
       return {
-        id: 'dde_sortarray',
+        id: 'ddesortarray',
         name: 'Array sorting',
         color1: '#72cf94',
         blocks: [
