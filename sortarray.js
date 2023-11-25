@@ -2,7 +2,7 @@
   class arraySorting {
     getInfo() {
       return {
-        id: 'sortarray',
+        id: 'dde_sortarray',
         name: 'Array sorting',
         color1: '#72cf94',
         blocks: [
@@ -74,38 +74,22 @@
       };
     }
     sortByNumber(args) {
-      try {
-        const array = JSON.parse(args.array).sort((a,b) => a-b)
-        if (args.menu == 'highest') { array.reverse() }
-        return JSON.stringify(array);
-      } catch {
-        return 'Invalid array';
-      }
+      const array = JSON.parse(args.array).sort((a,b) => a-b)
+      if (args.menu == 'highest') { array.reverse() }
+      return JSON.stringify(array);
     }
     sortByAlphabet(args) {
-      try {
-        const array = JSON.parse(args.array).sort()
-        if (args.menu == 'z-a') { array.reverse() }
-        return JSON.stringify(array);
-      } catch {
-        return 'Invalid array';
-      }
+      const array = JSON.parse(args.array).sort()
+      if (args.menu == 'z-a') { array.reverse() }
+      return JSON.stringify(array);
     }
     sortRandom(args) {
-      try {
-        const array = JSON.parse(args.array).sort(() => Math.random() - 0.5)
-        return JSON.stringify(array);
-      } catch {
-        return 'Invalid array';
-      }
+      const array = JSON.parse(args.array).sort(() => Math.random() - 0.5)
+      return JSON.stringify(array);
     }
     sortReverse(args) {
-      try {
-        const array = JSON.parse(args.array).reverse()
-        return JSON.stringify(array);
-      } catch {
-        return 'Invalid array';
-      }
+      const array = JSON.parse(args.array).reverse()
+      return JSON.stringify(array);
     }
   }
   Scratch.extensions.register(new arraySorting());
