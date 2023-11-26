@@ -114,19 +114,17 @@
       return JSON.stringify(array);
     }
     sortShuffle(args) {
-      const originalArr = JSON.parse(args.array)
-      const arr = []
-      const hasAnyElementInOriginalPosition = () => arr.some((el, index) => el === originalArr[index]);
-      const shuffleArray = (array) => {
+      let array = JSON.parse(args.array);
+      const shuffleArray = () => {
         for (let i = array.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
           [array[i], array[j]] = [array[j], array[i]];
         }
       };
-      while (hasAnyElementInOriginalPosition()) {
-        shuffleArray(arr);
+      while (array.some((el, index) => el === JSON.parse(args.array)[index])) {
+        shuffleArray();
       }
-      return JSON.stringify(arr);
+      return JSON.stringify(array);
     }
     sortReverse(args) {
       const array = JSON.parse(args.array).reverse()
