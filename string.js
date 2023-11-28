@@ -285,7 +285,7 @@
           {
             opcode: 'AddToStringUntil',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'add [string] to [string2] until length [number]',
+            text: 'add [string] to [string2] until length [number] from [menu]',
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
@@ -299,6 +299,10 @@
                 type: Scratch.ArgumentType.NUMBER,
                 defaultValue: 7
               },
+              menu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'STRING_PAD'
+              }
             }
           },
           {
@@ -413,6 +417,10 @@
           OR_AND: {
             acceptReporters: true,
             items: ['or','and']
+          },
+          STRING_PAD: {
+            acceptReporters: true,
+            items: ['start','end']
           }
         }
       };
@@ -505,7 +513,11 @@
       return JSON.stringify(array);
     }
     AddToStringUntil(args) {
-      return (args.string2).padStart(args.number, args.string);
+      if (args.menu == 'start') {
+        return (args.string2).padStart(args.number, args.string);
+      } else if (args.menu == 'end') {
+        return (args.string2).padEnd(args.number, args.string);
+      }
     }
     RemoveFromArray(args) {
       const array = JSON.parse(args.array)
