@@ -251,7 +251,7 @@
           {
             opcode: 'SplitText',
             blockType: Scratch.BlockType.REPORTER,
-            text: '[string] split by [string2]',
+            text: 'get [string] split by [string2]',
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
