@@ -36,6 +36,12 @@
               }
             }
           },
+          {
+            opcode: 'squareoutput',
+            blockType: Scratch.BlockType.OUTPUT,
+						text: ["square"],
+						output: "Boolean",
+						outputShape: 3
         ]
       };
     }
