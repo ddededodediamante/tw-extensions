@@ -39,7 +39,7 @@
           {
             opcode: 'squareoutput',
             blockType: Scratch.BlockType.OUTPUT,
-	    text: 'square',
+	    text: ['square'],
 	    output: "Boolean",
 	    outputShape: 3
 	  }
