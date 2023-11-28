@@ -9,7 +9,7 @@
           {
             opcode: 'sortByNumber',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'sort array [array] [menu] by numbers',
+            text: 'sort array [array] by [menu]',
             arguments: {
               array: {
                 type: Scratch.ArgumentType.STRING,
@@ -25,11 +25,11 @@
           {
             opcode: 'sortByAlphabet',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'sort array [array] [menu] by alphabet',
+            text: 'sort array [array] by [menu]',
             arguments: {
               array: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: '["a","z","c","b"]'
+                defaultValue: '["a","c","z","b"]'
               },
               menu: {
                 type: Scratch.ArgumentType.STRING,
@@ -67,7 +67,7 @@
             arguments: {
               array: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: '["a",1,"b",2]'
+                defaultValue: '[1,2,3]'
               }
             }
           },
