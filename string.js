@@ -366,14 +366,44 @@
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'hey'
+                defaultValue: 'hi'
               },
               string2: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'bye'
+                defaultValue: 'hey'
               }
             }
-          }
+          },
+          {
+            opcode: 'NewlineJoinThree',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'join [string] \\n [string2] \\n [string3]',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hi'
+              },
+              string2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hey'
+              },
+              string3: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hello'
+              }
+            }
+          },
+          {
+            opcode: 'valueReturn',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'value [return]',
+            arguments: {
+              value: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'Hello'
+              }
+            }
+          },
         ],
         menus: {
           CASE_CHANGE: {
@@ -512,7 +542,13 @@
       return '\n';
     }
     NewlineJoin(args) {
-      return args.string + '\n' + args.string2;
+      return `${args.string}\n${args.string2}`;
+    }
+    NewlineJoinThree(args) {
+      return `${args.string}\n${args.string2}\n${args.string3}`;
+    }
+    valueReturn(args) {
+      return args.value;
     }
   }
   Scratch.extensions.register(new stringthings());
