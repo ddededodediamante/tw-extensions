@@ -398,7 +398,7 @@
             blockType: Scratch.BlockType.REPORTER,
             text: 'value [return]',
             arguments: {
-              value: {
+              return: {
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: 'Hello'
               }
@@ -548,7 +548,7 @@
       return `${args.string}\n${args.string2}\n${args.string3}`;
     }
     valueReturn(args) {
-      return args.value;
+      return args.return;
     }
   }
   Scratch.extensions.register(new stringthings());
