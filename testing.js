@@ -42,7 +42,8 @@
 	    text: 'square',
 	    output: "Boolean",
 	    outputShape: 3
-        ]
+	  }
+	]
       };
     }
     argumentsjoin(args) {
