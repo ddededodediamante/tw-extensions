@@ -1,5 +1,5 @@
 (function(Scratch) {
-  class test_ext {
+  class dde_numcompress_ext {
     getInfo() {
       return {
         id: 'ddenumbercompress',
@@ -31,21 +31,25 @@
       };
     }
     compressnum(args) {
-      const decompressed = (args.num).toString();
+      const decompressed = (args.number).toString();
       let compressed = '';
-      for (let i = 0; i < decompressed.length; i++) {
-        compressed += String.fromCharCode(decompressed.charCodeAt(i) + 2);
+
+      for (let i = 0; i < decompressed.length; i += 4) {
+        const chunk = decompressed.slice(i, i + 4);
+        compressed += String.fromCharCode(parseInt(chunk, 10) + 1);
       }
       return compressed;
     }
     decompressnum(args) {
       const compressed = (args.compressed).toString();
       let decompressed = '';
+
       for (let i = 0; i < compressed.length; i++) {
-        decompressed += String.fromCharCode(compressed.charCodeAt(i) - 2);
+        const chunk = (compressed.charCodeAt(i) - 1).toString().padStart(4, '0');
+        decompressed += chunk;
       }
-      return parseFloat(decompressed);
+      return decompressed;
     }
   }
-  Scratch.extensions.register(new test_ext());
+  Scratch.extensions.register(new dde_numcompress_ext());
 })(Scratch);
