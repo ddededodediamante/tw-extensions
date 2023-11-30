@@ -27,7 +27,7 @@
               }
             }
           }
-	      ]
+	]
       };
     }
     compressnum(args) {
