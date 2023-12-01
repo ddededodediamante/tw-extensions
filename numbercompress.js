@@ -12,7 +12,7 @@
             arguments: {
               number: {
                 type: Scratch.ArgumentType.NUMBER,
-                defaultValue: 1093874
+                defaultValue: 1093123874
               }
             }
           },
@@ -31,37 +31,31 @@
       };
     }
     compressnum(args) {
-      const decompressed = (args.number).toString();
-      let hexString = '';
-
-      for (let i = 0; i < decompressed.length; i++) {
-        hexString += decompressed.charCodeAt(i).toString(16);
-      }
-
+      const decompressed = args.number.toString();
       let compressed = '';
+	    
+      for (let i = 0; i < decompressed.length; i += 3) {
+	const sliceEnd = i + 3 <= decompressed.length ? i + 3 : decompressed.length;
+        const sliced = decompressed.slice(i, sliceEnd);
+        const num = parseInt(sliced, 10);
 
-      for (let i = 0; i < hexString.length; i += 4) {
-        const chunk = hexString.slice(i, i + 4).padStart(4, '0');
-        compressed += String.fromCharCode(parseInt(chunk, 16) + 1);
+        compressed += String.fromCharCode(num);
       }
 
       return compressed;
     }
-
     decompressnum(args) {
-      const compressed = (args.compressed).toString();
-      let hexString = '';
-
-      for (let i = 0; i < compressed.length; i++) {
-        const chunk = (compressed.charCodeAt(i) - 1).toString(16).padStart(4, '0');
-        hexString += chunk;
-      }
-
+      const compressed = args.compressed;
       let decompressed = '';
-
-      for (let i = 0; i < hexString.length; i += 2) {
-        const byte = hexString.slice(i, i + 2);
-        decompressed += String.fromCharCode(parseInt(byte, 16));
+	    
+      for (let i = 0; i < compressed.length; i++) {
+	const num = compressed.charCodeAt(i)
+        if (i < compressed.length - 1 && compressed[i + 1] === '.') {
+          decompressed += '.';
+          i++;
+        } else {
+          decompressed += num.toString().padStart(3, '0');
+        }
       }
 
       return decompressed;
