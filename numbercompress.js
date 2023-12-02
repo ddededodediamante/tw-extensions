@@ -34,7 +34,8 @@
       const decompressed = args.number.toString();
       let compressed = '';
       const indexBeforeAny = str => str.lastIndexOf('0', str.search(/[^0]/));
-	    
+       const charCodeZero = String.fromCharCode(0);
+
       for (let i = 0; i < decompressed.length; i += 3) {
 	const sliceEnd = i + 3 <= decompressed.length ? i + 3 : decompressed.length;
         const sliced = decompressed.slice(i, sliceEnd);
@@ -48,9 +49,9 @@
 	  }
 	  const zeros = sliced.slice(0, sliceIBA);
 	  const afterZero = sliced.slice(sliceIBA);
-	  compressed += '\x00'.repeat(zeros.length);
+	  compressed += charCodeZero.repeat(zeros.length);
 	  if (afterZero != '') {
-            compressed += String.fromCharCode(Number(afterZero));
+            compressed += String.fromCharCode(afterZero);
 	  }
 	}
       }
@@ -59,13 +60,15 @@
     decompressnum(args) {
       const compressed = args.compressed;
       let decompressed = '';
+      const charCodeZero = String.fromCharCode(0);
 	    
       for (let i = 0; i < compressed.length; i++) {
 	const char = compressed.charAt(i);
-	if (char === '\x00') {
+	console.log(char)
+	if (char === charCodeZero) {
 	  decompressed += '0';
 	} else {
-	  decompressed += compressed.charCodeAt(i).toString();
+	  decompressed += compressed.charCodeAt(i);
 	}
       }
 
