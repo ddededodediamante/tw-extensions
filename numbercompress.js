@@ -33,15 +33,27 @@
     compressnum(args) {
       const decompressed = args.number.toString();
       let compressed = '';
+      const indexBeforeAny = str => str.lastIndexOf('0', str.search(/[^0]/));
 	    
       for (let i = 0; i < decompressed.length; i += 3) {
 	const sliceEnd = i + 3 <= decompressed.length ? i + 3 : decompressed.length;
         const sliced = decompressed.slice(i, sliceEnd);
-        const num = parseInt(sliced, 10);
-
-        compressed += String.fromCharCode(num);
+        const num = Number(sliced);
+	if (num == sliced && num > 0) {
+	  compressed += String.fromCharCode(num);
+	} else {
+	  let sliceIBA = indexBeforeAny(sliced);
+	  if (sliceIBA === -1) { 
+	    sliceIBA = sliced.length;
+	  }
+	  const zeros = sliced.slice(0, sliceIBA);
+	  const afterZero = sliced.slice(sliceIBA);
+	  compressed += '\x00'.repeat(zeros.length);
+	  if (afterZero != '') {
+            compressed += String.fromCharCode(Number(afterZero));
+	  }
+	}
       }
-
       return compressed;
     }
     decompressnum(args) {
@@ -49,13 +61,12 @@
       let decompressed = '';
 	    
       for (let i = 0; i < compressed.length; i++) {
-	const num = compressed.charCodeAt(i)
-        if (i < compressed.length - 1 && compressed[i + 1] === '.') {
-          decompressed += '.';
-          i++;
-        } else {
-          decompressed += num.toString().padStart(3, '0');
-        }
+	const char = compressed.charAt(i);
+	if (char === '\x00') {
+	  decompressed += '0';
+	} else {
+	  decompressed += compressed.charCodeAt(i).toString();
+	}
       }
 
       return decompressed;
