@@ -33,42 +33,37 @@
     compressnum(args) {
       const decompressed = args.number.toString();
       let compressed = '';
-      const indexBeforeAny = str => str.lastIndexOf('0', str.search(/[^0]/));
-       const charCodeZero = String.fromCharCode(0);
-
-      for (let i = 0; i < decompressed.length; i += 3) {
-	const sliceEnd = i + 3 <= decompressed.length ? i + 3 : decompressed.length;
+	    
+      for (let i = 0; i < decompressed.length; i += 5) {
+	const sliceEnd = i + 5 <= decompressed.length ? i + 5 : decompressed.length;
         const sliced = decompressed.slice(i, sliceEnd);
-        const num = Number(sliced);
-	if (num == sliced && num > 0) {
-	  compressed += String.fromCharCode(num);
+	if (!sliced.startsWith('0')) {
+	  compressed += String.fromCharCode(parseInt(sliced) + 5);
 	} else {
-	  let sliceIBA = indexBeforeAny(sliced);
-	  if (sliceIBA === -1) { 
-	    sliceIBA = sliced.length;
-	  }
-	  const zeros = sliced.slice(0, sliceIBA);
-	  const afterZero = sliced.slice(sliceIBA);
-	  compressed += charCodeZero.repeat(zeros.length);
-	  if (afterZero != '') {
-            compressed += String.fromCharCode(afterZero);
-	  }
+	  const countZeros = sliced.match(/^0*/)[0].length;
+	  compressed += String.fromCharCode(countZeros);
+		
+	  const remaining = sliced.slice(countZeros);
+          if (remaining !== '') {
+	    for (let z = 0; i < remaining.length; z++) {
+	      compressed += String.fromCharCode(parseInt(remaining.charAt(z)) + 5); 
+	    }
+          }
 	}
       }
+	    
       return compressed;
     }
     decompressnum(args) {
       const compressed = args.compressed;
       let decompressed = '';
-      const charCodeZero = String.fromCharCode(0);
 	    
       for (let i = 0; i < compressed.length; i++) {
-	const char = compressed.charAt(i);
-	console.log(char)
-	if (char === charCodeZero) {
-	  decompressed += '0';
-	} else {
-	  decompressed += compressed.charCodeAt(i);
+	const charCode = compressed.charCodeAt(i)
+	if (charCode < 6) { 
+          decompressed += '0'.repeat(charCode);
+        } else {
+	  decompressed += (charCode - 5).toString();
 	}
       }
 
