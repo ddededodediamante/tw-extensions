@@ -34,21 +34,24 @@
       const decompressed = args.number.toString();
       let compressed = '';
 	    
-      for (let i = 0; i < decompressed.length; i += 5) {
-	const sliceEnd = i + 5 <= decompressed.length ? i + 5 : decompressed.length;
+      for (let i = 0; i < decompressed.length; i += 4) {
+	const sliceEnd = i + 4 <= decompressed.length ? i + 4 : decompressed.length;
         const sliced = decompressed.slice(i, sliceEnd);
 	if (!sliced.startsWith('0')) {
-	  compressed += String.fromCharCode(parseInt(sliced) + 5);
+	  compressed += String.fromCharCode(parseInt(sliced));
 	} else {
-	  const countZeros = sliced.match(/^0*/)[0].length;
-	  compressed += String.fromCharCode(countZeros);
+	  let countZeros = sliced.match(/^0*/)[0].length;
+          for (let j = sliceEnd; j < decompressed.length && decompressed[j] === '0'; j++) {
+            countZeros++;
+          }
+	  compressed += String.fromCharCode(9999 + countZeros);
 		
 	  const remaining = sliced.slice(countZeros);
           if (remaining !== '') {
-	    for (let z = 0; i < remaining.length; z++) {
-	      compressed += String.fromCharCode(parseInt(remaining.charAt(z)) + 5); 
-	    }
+	    compressed += String.fromCharCode(parseInt(remaining)); 
           }
+
+	  i += countZeros - 1;
 	}
       }
 	    
@@ -60,10 +63,10 @@
 	    
       for (let i = 0; i < compressed.length; i++) {
 	const charCode = compressed.charCodeAt(i)
-	if (charCode < 6) { 
-          decompressed += '0'.repeat(charCode);
+	if (charCode > 9999) { 
+          decompressed += '0'.repeat(charCode - 9999);
         } else {
-	  decompressed += (charCode - 5).toString();
+	  decompressed += charCode.toString();
 	}
       }
 
