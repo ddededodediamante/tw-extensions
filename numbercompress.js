@@ -32,45 +32,48 @@
     }
     compressnum(args) {
       const decompressed = args.number.toString();
-      let compressed = '';
-	    
+      const compressedArray = [];
+    
       for (let i = 0; i < decompressed.length; i += 4) {
-	const sliceEnd = i + 4 <= decompressed.length ? i + 4 : decompressed.length;
+        const sliceEnd = i + 4 <= decompressed.length ? i + 4 : decompressed.length;
         const sliced = decompressed.slice(i, sliceEnd);
-	if (!sliced.startsWith('0')) {
-	  compressed += String.fromCharCode(parseInt(sliced));
-	} else {
-	  let countZeros = sliced.match(/^0*/)[0].length;
+    
+        if (!sliced.startsWith('0')) {
+          compressedArray.push(String.fromCharCode(parseInt(sliced)));
+        } else {
+          let countZeros = sliced.match(/^0*/)[0].length;
+    
           for (let j = sliceEnd; j < decompressed.length && decompressed[j] === '0'; j++) {
             countZeros++;
           }
-	  compressed += String.fromCharCode(9999 + countZeros);
-		
-	  const remaining = sliced.slice(countZeros);
+    
+          compressedArray.push(String.fromCharCode(9999 + countZeros));
+    
+          const remaining = sliced.slice(countZeros);
           if (remaining !== '') {
-	    compressed += String.fromCharCode(parseInt(remaining)); 
+            compressedArray.push(String.fromCharCode(parseInt(remaining)));
           }
-
-	  i += countZeros - 1;
-	}
+    
+          i += countZeros - 1;
+        }
       }
-	    
-      return compressed;
+    
+      return compressedArray.join('');
     }
     decompressnum(args) {
       const compressed = args.compressed;
-      let decompressed = '';
+      const decompressedArray = [];
 	    
       for (let i = 0; i < compressed.length; i++) {
 	const charCode = compressed.charCodeAt(i)
 	if (charCode > 9999) { 
-          decompressed += '0'.repeat(charCode - 9999);
+          decompressedArray.push('0'.repeat(charCode - 9999));
         } else {
-	  decompressed += charCode.toString();
+	  decompressedArray.push(charCode.toString());
 	}
       }
 
-      return decompressed;
+      return decompressedArray.join('');
     }
   }
   Scratch.extensions.register(new dde_numcompress_ext());
