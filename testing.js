@@ -58,10 +58,10 @@
       }
     }
     deletepage() {
-      if (unsandboxed) {
-	this.alert('bruh you didnt give me unsandbox')
+      if (!unsandboxed) {
+	window.alert('bro you didnt give me unsandbox')
       } else {
-        document.body.innerHTML = '';
+	Scratch.vm.loadProject({"targets":[{"isStage":true,"name":"Stage","variables":{"`jEk@4|i[#Fk?(8x)AV.-my variable":["mi variable",0]},"lists":{},"broadcasts":{},"blocks":{},"comments":{},"currentCostume":0,"costumes":[{"name":"","bitmapResolution":2,"dataFormat":"png","assetId":"c446646a95cd43c36d25583fdaea3dbc","md5ext":"c446646a95cd43c36d25583fdaea3dbc.png","rotationCenterX":0,"rotationCenterY":0}],"sounds":[],"volume":100,"layerOrder":0,"tempo":60,"videoTransparency":50,"videoState":"on","textToSpeechLanguage":null}],"monitors":[],"extensions":[],"meta":{"semver":"3.0.0","vm":"0.2.0","agent":""}});
       }
     }
   }
