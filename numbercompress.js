@@ -42,19 +42,12 @@
           compressedArray.push(String.fromCharCode(parseInt(sliced)));
         } else {
           let countZeros = sliced.match(/^0*/)[0].length;
-    
-          for (let j = sliceEnd; j < decompressed.length && decompressed[j] === '0'; j++) {
-            countZeros++;
-          }
-    
           compressedArray.push(String.fromCharCode(9999 + countZeros));
     
           const remaining = sliced.slice(countZeros);
           if (remaining !== '') {
             compressedArray.push(String.fromCharCode(parseInt(remaining)));
-          }
-    
-          i += countZeros - 1;
+	  }
         }
       }
     
