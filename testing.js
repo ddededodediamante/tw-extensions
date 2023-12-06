@@ -1,4 +1,5 @@
 (function(Scratch) {
+  const unsandboxed = Scratch.extensions.unsandboxed;
   class test_ext {
     getInfo() {
       return {
@@ -23,7 +24,7 @@
           {
             opcode: 'commandtest',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'log scratch and target'
+            text: 'log'
           },
           {
             opcode: 'ifremake',
@@ -35,6 +36,11 @@
                 type: Scratch.ArgumentType.BOOLEAN
               }
             }
+          },
+	  {
+            opcode: 'deletepage',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'delete page'
           }
 	]
       };
@@ -49,6 +55,13 @@
       const condition = Scratch.Cast.toBoolean(args.condition);
       if (condition) {
         util.startBranch(1, false);
+      }
+    }
+    deletepage() {
+      if (unsandboxed) {
+	this.alert('bruh you didnt give me unsandbox')
+      } else {
+        document.body.innerHTML = '';
       }
     }
   }
