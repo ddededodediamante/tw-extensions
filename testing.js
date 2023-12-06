@@ -40,7 +40,7 @@
 	  {
             opcode: 'deletepage',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'delete page'
+            text: 'delete project'
           }
 	]
       };
