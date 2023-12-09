@@ -28,9 +28,20 @@
           },
           {
             opcode: 'ifremake',
-            blockType: Scratch.BlockType.COMMAND,
+            blockType: Scratch.BlockType.CONDITIONAL,
             text: 'if [condition] then',
             branchCount: 1,
+            arguments: {
+              condition: {
+                type: Scratch.ArgumentType.BOOLEAN
+              }
+            }
+          },
+	  {
+            opcode: 'ifelseremake',
+            blockType: Scratch.BlockType.CONDITIONAL,
+            text: ["if [condition] then", "else"],
+            branchCount: 2,
             arguments: {
               condition: {
                 type: Scratch.ArgumentType.BOOLEAN
@@ -55,6 +66,14 @@
       const condition = Scratch.Cast.toBoolean(args.condition);
       if (condition) {
         util.startBranch(1, false);
+      }
+    }
+    ifelseremake(args, util) {
+      const condition = Scratch.Cast.toBoolean(args.condition);
+      if (condition) {
+        util.startBranch(1, false);
+      } else {
+	util.startBranch(2, false);
       }
     }
     deletepage() {
