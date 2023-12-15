@@ -161,7 +161,7 @@ class TimerExtension {
       case 'minutes':
         return Math.floor(elapsedMilliseconds / (1000 * 60));
       case 'hours':
-        return Math.floor((elapsedMilliseconds / (1000 * 60 * 60));
+        return Math.floor(elapsedMilliseconds / (1000 * 60 * 60));
       case 'milliseconds':
         return elapsedMilliseconds;
       default:
