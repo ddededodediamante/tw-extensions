@@ -55,7 +55,14 @@ class TimerExtension {
         {
           opcode: 'stopAllTimers',
           blockType: Scratch.BlockType.COMMAND,
-          text: 'stop all timers',
+          text: 'stop all timers [action]',
+          arguments: {
+            action: {
+              type: Scratch.ArgumentType.DROPDOWN,
+              menu: 'stopActions',
+              defaultValue: 'stop',
+            },
+          },
         },
         {
           opcode: 'getAllTimers',
@@ -81,6 +88,10 @@ class TimerExtension {
       ],
       menus: {
         units: ['seconds', 'minutes', 'hours', 'milliseconds'],
+        stopActions: {
+          acceptReporters: false, // Reporters not allowed for this menu
+          items: ['stop', 'pause'],
+        },
       },
     };
   }
@@ -115,17 +126,24 @@ class TimerExtension {
     }
   }
 
-  stopAllTimers() {
+  stopAllTimers(args) {
+    const stopAction = args.action;
+
     for (const timerName in this.timers) {
       if (this.timers.hasOwnProperty(timerName)) {
-        this.timers[timerName].pausedTime = new Date().getTime();
+        if (stopAction === 'pause') {
+          this.timers[timerName].pausedTime = new Date().getTime();
+        } else if (stopAction === 'stop') {
+          this.timers[timerName].startTime = null;
+          this.timers[timerName].pausedTime = null;
+        }
       }
     }
   }
 
   getAllTimers() {
     const timerNames = Object.keys(this.timers);
-    return JSON.stringify(timerNames);
+    return timerNames;
   }
 
   elapsedTime(args) {
@@ -139,13 +157,13 @@ class TimerExtension {
 
     switch (args.unit.toLowerCase()) {
       case 'seconds':
-        return (elapsedMilliseconds / 1000).toFixed(2);
+        return Math.floor(elapsedMilliseconds / 1000);
       case 'minutes':
-        return (elapsedMilliseconds / (1000 * 60)).toFixed(2);
+        return Math.floor(elapsedMilliseconds / (1000 * 60));
       case 'hours':
-        return (elapsedMilliseconds / (1000 * 60 * 60)).toFixed(2);
+        return Math.floor((elapsedMilliseconds / (1000 * 60 * 60));
       case 'milliseconds':
-        return elapsedMilliseconds.toFixed(2);
+        return elapsedMilliseconds;
       default:
         return 0;
     }
