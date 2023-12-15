@@ -53,13 +53,13 @@ class TimerExtension {
           },
         },
         {
-          opcode: 'stopAllTimers',
+          opcode: 'actionAllTimers',
           blockType: Scratch.BlockType.COMMAND,
-          text: 'stop all timers [action]',
+          text: '[action] all timers',
           arguments: {
             action: {
               type: Scratch.ArgumentType.DROPDOWN,
-              menu: 'stopActions',
+              menu: 'timersActions',
               defaultValue: 'stop',
             },
           },
@@ -87,10 +87,13 @@ class TimerExtension {
         },
       ],
       menus: {
-        units: ['seconds', 'minutes', 'hours', 'milliseconds'],
-        stopActions: {
-          acceptReporters: false, // Reporters not allowed for this menu
-          items: ['stop', 'pause'],
+        units: {
+          acceptReporters: true,
+          items: ['seconds', 'minutes', 'hours', 'milliseconds']
+        },
+        timersActions: {
+          acceptReporters: true,
+          items: ['stop', 'resume']
         },
       },
     };
@@ -126,15 +129,16 @@ class TimerExtension {
     }
   }
 
-  stopAllTimers(args) {
+  actionAllTimers(args) {
     const stopAction = args.action;
 
     for (const timerName in this.timers) {
       if (this.timers.hasOwnProperty(timerName)) {
-        if (stopAction === 'pause') {
+        if (stopAction === 'stop') {
           this.timers[timerName].pausedTime = new Date().getTime();
-        } else if (stopAction === 'stop') {
-          this.timers[timerName].startTime = null;
+        } else if (stopAction === 'resume') {
+          const pausedDuration = new Date().getTime() - this.timers[timerName].pausedTime;
+          this.timers[timerName].startTime += pausedDuration;
           this.timers[timerName].pausedTime = null;
         }
       }
