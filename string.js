@@ -432,19 +432,24 @@
       } else if (args.menu == 'UPPERCASE') {
         return str.toUpperCase();
       } else if (args.menu == 'mIxEd CaSe') {
-        var returns = '';
-        var state = 1;
+        let returns = [];
+        let state = true;
+        
         for (let i = 0; i < str.length; i++) {
-          returns += (state == 1 ? str.charAt(i).toLowerCase() : str.charAt(i).toUpperCase());
-          state = (0 - state);
+          const char = str.charAt(i)
+          returns.push(state ? char.toLowerCase() : char.toUpperCase());
+          state = !state;
         }
-        return returns;
+        
+        return returns.join();
       } else if (args.menu == 'random case') {
-        var returns = '';
+        let returns = [];
+        
         for (let i = 0; i < str.length; i++) {
-          returns += (Math.random() > 0.5 ? str.charAt(i).toLowerCase() : str.charAt(i).toUpperCase());
+          returns.push(Math.random() > 0.5 ? str.charAt(i).toLowerCase() : str.charAt(i).toUpperCase());
         }
-        return returns;
+        
+        return returns.join();
       } else {
         const array = str.split(' ');
         const array2 = [];
