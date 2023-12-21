@@ -33,37 +33,39 @@
     compressnum(args) {
       const decompressed = args.number.toString();
       const compressedArray = [];
-    
+
       for (let i = 0; i < decompressed.length; i += 4) {
-        const sliceEnd = i + 4 <= decompressed.length ? i + 4 : decompressed.length;
+        const sliceEnd = Math.min(i + 4, decompressed.length);
         const sliced = decompressed.slice(i, sliceEnd);
-    
+
         if (!sliced.startsWith('0')) {
           compressedArray.push(String.fromCharCode(parseInt(sliced)));
         } else {
           let countZeros = sliced.match(/^0*/)[0].length;
           compressedArray.push(String.fromCharCode(9999 + countZeros));
-    
+
           const remaining = sliced.slice(countZeros);
           if (remaining !== '') {
             compressedArray.push(String.fromCharCode(parseInt(remaining)));
-	  }
+          }
         }
       }
-    
+	    
       return compressedArray.join('');
     }
+
     decompressnum(args) {
       const compressed = args.compressed;
       const decompressedArray = [];
-	    
+
       for (let i = 0; i < compressed.length; i++) {
-	const charCode = compressed.charCodeAt(i)
-	if (charCode > 9999) { 
+        const charCode = compressed.charCodeAt(i);
+
+        if (charCode > 9999) {
           decompressedArray.push('0'.repeat(charCode - 9999));
         } else {
-	  decompressedArray.push(charCode.toString());
-	}
+          decompressedArray.push(charCode.toString());
+        }
       }
 
       return decompressedArray.join('');
