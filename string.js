@@ -86,6 +86,21 @@
             }
           },
           {
+            opcode: 'HasSomething',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: '[string] contains [menu]',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'Love 4 you :D'
+              },
+              menu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'CONTAINS'
+              }
+            }
+          },
+          {
             opcode: 'RepeatString',
             blockType: Scratch.BlockType.REPORTER,
             text: 'repeat [string] [number] times',
@@ -97,6 +112,21 @@
               number: {
                 type: Scratch.ArgumentType.NUMBER,
                 defaultValue: 5
+              }
+            }
+          },
+          {
+            opcode: 'LengthExcluding',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'length of [string] excluding [exclude]',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hi_hi'
+              },
+              exclude: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '_'
               }
             }
           },
@@ -169,6 +199,25 @@
             }
           },
           {
+            opcode: 'IndexNumberOf',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'index of # [number] [string] in [string]2',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hi'
+              },
+              string2: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hi hi hi'
+              },
+              number: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 2
+              }
+            }
+          },
+          {
             opcode: 'ReplaceFirst',
             blockType: Scratch.BlockType.REPORTER,
             text: 'in [string] replace first [string2] with [string3]',
@@ -194,15 +243,15 @@
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'abc abc'
+                defaultValue: 'haha'
               },
               string2: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'abc'
+                defaultValue: 'h'
               },
               string3: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'def'
+                defaultValue: 'm'
               }
             }
           },
@@ -213,15 +262,15 @@
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'abc abc'
+                defaultValue: 'hi hi hi'
               },
               string2: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'abc'
+                defaultValue: 'hi'
               },
               string3: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'def'
+                defaultValue: 'hey'
               },
               number: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -398,7 +447,22 @@
             }
           },
           {
-            opcode: 'valueReturn',
+            opcode: 'URLcode',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'URL [menu] [string]',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hey there'
+              },
+              menu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'URL_CODE'
+              }
+            }
+          },
+          {
+            opcode: 'ValueReturn',
             blockType: Scratch.BlockType.REPORTER,
             text: 'value [return]',
             arguments: {
@@ -421,6 +485,14 @@
           STRING_PAD: {
             acceptReporters: true,
             items: ['start','end']
+          },
+          URL_CODE: {
+            acceptReporters: true,
+            items: ['encode','decode']
+          },
+          CONTAINS: {
+            acceptReporters: true,
+            items: ['letters','numbers','specials']
           }
         }
       };
@@ -441,7 +513,7 @@
           state = !state;
         }
         
-        return returns.join();
+        return returns.join('');
       } else if (args.menu == 'random case') {
         let returns = [];
         
@@ -449,7 +521,7 @@
           returns.push(Math.random() > 0.5 ? str.charAt(i).toLowerCase() : str.charAt(i).toUpperCase());
         }
         
-        return returns.join();
+        return returns.join('');
       } else {
         const array = str.split(' ');
         const array2 = [];
@@ -564,8 +636,37 @@
     NewlineJoinThree(args) {
       return `${args.string}\n${args.string2}\n${args.string3}`;
     }
-    valueReturn(args) {
+    ValueReturn(args) {
       return args.return;
+    }
+    LengthExcluding(args) {
+      return (args.string).replaceAll(args.exclude,'').length;
+    }
+    URLcode(args) {
+      if (args.menu == 'encode') {
+        return encodeURIComponent(args.string);
+      } else if (args.menu == 'decode') {
+        return decodeURIComponent(args.string);
+      }
+    }
+    HasSomething(args) {
+      if (args.menu == 'letters') {
+        return /[a-zA-Z]/.test(args.string);
+      } else if (args.menu == 'numbers') {
+        return /\d/.test(args.string);
+      } else if (args.menu == 'specials') {
+        return (args.string).replace(/[a-zA-Z0-9\s]/g, '').length > 0;
+      } else { return false; }
+    }
+    IndexNumberOf(args) {
+      let index = 0;
+      for (let i = 0; i < args.number; i++) {
+        index = (args.string2).indexOf(args.string, index+1);
+        if (index == -1) {
+          return 0;
+        }
+      }
+      return index + 1;
     }
   }
   Scratch.extensions.register(new stringthings());
