@@ -410,7 +410,13 @@
           {
             opcode: 'Newline',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'newline'
+            text: '[menu] newline',
+            arguments: {
+              menu: {
+                type: Scratch.ArgumentType.STRING,
+                menu: 'AMOUNT_NEWLINE'
+              }
+            }
           },
           {
             opcode: 'NewlineJoin',
@@ -496,7 +502,7 @@
           },
           AMOUNT_NEWLINE: {
             acceptReporters: true,
-            items: ['single','double','triple,'quadruple','quintuple']
+            items: ['single','double','triple','quadruple','quintuple']
           }
         }
       };
@@ -631,7 +637,7 @@
     RepeatString(args) {
       return (args.string).repeat(args.number);
     }
-    Newline() {
+    Newline(args) {
       const amount = args.menu;
       switch (amount) {
         case 'single':
@@ -640,12 +646,13 @@
           return '\n\n';
         case 'triple':
           return '\n\n\n';
-        case 'quadruple:
+        case 'quadruple':
          return '\n\n\n\n';
         case 'quintuple':
           return '\n\n\n\n\n';
         default:
           return;
+      }
     }
     NewlineJoin(args) {
       return `${args.string}\n${args.string2}`;
