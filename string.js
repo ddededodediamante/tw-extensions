@@ -493,6 +493,10 @@
           CONTAINS: {
             acceptReporters: true,
             items: ['letters','numbers','specials']
+          },
+          AMOUNT_NEWLINE: {
+            acceptReporters: true,
+            items: ['single','double','triple,'quadruple','quintuple']
           }
         }
       };
@@ -628,7 +632,20 @@
       return (args.string).repeat(args.number);
     }
     Newline() {
-      return '\n';
+      const amount = args.menu;
+      switch (amount) {
+        case 'single':
+          return '\n';
+        case 'double':
+          return '\n\n';
+        case 'triple':
+          return '\n\n\n';
+        case 'quadruple:
+         return '\n\n\n\n';
+        case 'quintuple':
+          return '\n\n\n\n\n';
+        default:
+          return;
     }
     NewlineJoin(args) {
       return `${args.string}\n${args.string2}`;
