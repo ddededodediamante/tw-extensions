@@ -201,7 +201,7 @@
           {
             opcode: 'IndexNumberOf',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'index of # [number] [string] in [string]2',
+            text: 'index of # [number] [string] in [string2]',
             arguments: {
               string: {
                 type: Scratch.ArgumentType.STRING,
