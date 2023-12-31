@@ -3,7 +3,7 @@
     getInfo() {
       return {
         id: 'coolextension',
-        name: 'Cool Extension',
+        name: 'Coolest Extension',
         color1: '#3e4652',
         blocks: [
           {
@@ -15,6 +15,16 @@
             opcode: 'lettuce',
             blockType: Scratch.BlockType.REPORTER,
             text: 'lettuce iceberg cost per Pound in U.S. City'
+          },
+          {
+            opcode: 'helloInSpanish',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'hello in spanish'
+          },
+          {
+            opcode: 'holaEnIngles',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'hola en ingles'
           }
         ]
       };
@@ -24,6 +34,12 @@
     }
     lettuce() {
       return 1.660;
+    }
+    helloInSpanish() {
+      return 'hola';
+    }
+    holaEnIngles() {
+      return 'hello';
     }
   }
   Scratch.extensions.register(new cool_ext());
