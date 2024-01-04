@@ -310,11 +310,10 @@
       const array = [];
       const targets = Scratch.vm.runtime.targets;
       if (targets.length < 2) { return ['No sprites.']; }
-      for (let i = 1; i < targets.length; i++) {
-        const sprite = targets[i];
+      for (let e = 1; e < targets.length; e++) {
+        const sprite = targets[e];
         if (sprite.isOriginal) {
-          const name = sprite.getName();
-          array.push({ text:name, value:name });
+          array.push(sprite.getName());
         }
       }
       return array;
