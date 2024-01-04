@@ -22,9 +22,9 @@
             text: 'hello in spanish'
           },
           {
-            opcode: 'holaEnIngles',
+            opcode: 'helloInEnglish',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'hola en ingles'
+            text: 'hello in english'
           }
         ]
       };
@@ -38,7 +38,7 @@
     helloInSpanish() {
       return 'hola';
     }
-    holaEnIngles() {
+    helloInEnglish() {
       return 'hello';
     }
   }
