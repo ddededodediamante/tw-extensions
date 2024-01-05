@@ -2,8 +2,8 @@
   class stringthings {
     getInfo() {
       return {
-        id: 'ddestringthings',
-        name: 'String Things',
+        id: 'ddededodediamantestringmutilation',
+        name: 'String Mutilation',
         color1: '#72cf94',
         blocks: [
           {
