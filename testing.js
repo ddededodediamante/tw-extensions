@@ -1,5 +1,6 @@
 (function(Scratch) {
   const unsandboxed = Scratch.extensions.unsandboxed;
+	
   function delayAndReturn(value, seconds) {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -108,6 +109,7 @@
     }
     returnwithwait(args) {
       return delayAndReturn(args.string, args.time);
+    }
   }
   Scratch.extensions.register(new test_ext());
 })(Scratch);
