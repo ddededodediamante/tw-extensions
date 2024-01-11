@@ -1,5 +1,13 @@
 (function(Scratch) {
   const unsandboxed = Scratch.extensions.unsandboxed;
+  function delayAndReturn(value, seconds) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(value);
+      }, seconds * 1000);
+    });
+  }
+	
   class test_ext {
     getInfo() {
       return {
@@ -52,7 +60,22 @@
             opcode: 'deletepage',
             blockType: Scratch.BlockType.COMMAND,
             text: 'delete project'
-          }
+          },
+	  {
+            opcode: 'returnwithwait',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'return [string] after [time] seconds',
+            arguments: {
+              string: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'hello'
+              },
+              time: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 3
+              }
+            }
+          },
 	]
       };
     }
@@ -83,6 +106,8 @@
 	Scratch.vm.loadProject({"targets":[{"isStage":true,"name":"Stage","variables":{"`jEk@4|i[#Fk?(8x)AV.-my variable":["mi variable",0]},"lists":{},"broadcasts":{},"blocks":{},"comments":{},"currentCostume":0,"costumes":[{"name":"","bitmapResolution":2,"dataFormat":"png","assetId":"c446646a95cd43c36d25583fdaea3dbc","md5ext":"c446646a95cd43c36d25583fdaea3dbc.png","rotationCenterX":0,"rotationCenterY":0}],"sounds":[],"volume":100,"layerOrder":0,"tempo":60,"videoTransparency":50,"videoState":"on","textToSpeechLanguage":null}],"monitors":[],"extensions":[],"meta":{"semver":"3.0.0","vm":"0.2.0","agent":""}});
       }
     }
+    returnwithwait(args) {
+      return delayAndReturn(args.string, args.time);
   }
   Scratch.extensions.register(new test_ext());
 })(Scratch);
