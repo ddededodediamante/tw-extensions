@@ -64,7 +64,7 @@
           },
 	  {
             opcode: 'returnwithwait',
-            blockType: Scratch.BlockType.REPORTER,
+            blockType: Scratch.BlockType.OUTPUT,
 	    allowDropAnywhere: true,
 	    outputShape: 3,
             text: 'return [string] after [time] seconds',
