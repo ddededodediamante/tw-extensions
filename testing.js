@@ -65,6 +65,7 @@
 	  {
             opcode: 'returnwithwait',
             blockType: Scratch.BlockType.REPORTER,
+	    allowDropAnywhere: true,
             text: 'return [string] after [time] seconds',
             arguments: {
               string: {
