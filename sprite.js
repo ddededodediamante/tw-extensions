@@ -1,8 +1,8 @@
 (function(Scratch) {
   //Made by ddededodediamante
-  const rightIcon = 'https://turbowarp.org/static/blocks-media/rotate-right.svg';
-  const leftIcon = 'https://turbowarp.org/static/blocks-media/rotate-left.svg';
-  const greenFlag = 'https://turbowarp.org/static/blocks-media/green-flag.svg';
+  const rightIcon = 'https://turbowarp.org/static/blocks-media/default/rotate-right.svg';
+  const leftIcon = 'https://turbowarp.org/static/blocks-media/default/rotate-left.svg';
+  const greenFlag = 'https://turbowarp.org/static/blocks-media/default/green-flag.svg';
   const motion = Scratch.vm.runtime.ext_scratch3_motion;
   const looks = Scratch.vm.runtime.ext_scratch3_looks;
   if (!Scratch.extensions.unsandboxed) {
