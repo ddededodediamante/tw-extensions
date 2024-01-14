@@ -419,7 +419,7 @@
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       const think = Scratch.Cast.toString(args.think);
-      looks.think({ target:target }, { MESSAGE:think })
+      Scratch.vm.runtime.emit('SAY', target, 'think', think)
     }
     spritegreenflag(args, util) {
       const target = spritebyname(args.spritemenu);
