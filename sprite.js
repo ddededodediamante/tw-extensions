@@ -1,13 +1,22 @@
 (function(Scratch) {
   //Made by ddededodediamante
+  
   const rightIcon = 'https://turbowarp.org/static/blocks-media/default/rotate-right.svg';
   const leftIcon = 'https://turbowarp.org/static/blocks-media/default/rotate-left.svg';
-  const greenFlag = 'https://turbowarp.org/static/blocks-media/default/green-flag.svg';
+  
+  if (Scratch.extensions.isPenguinMod) {
+    var clickFlag = 'https://studio.penguinmod.com/static/blocks-media/blue-flag.svg';
+  } else {
+    var clickFlag = 'https://turbowarp.org/static/blocks-media/default/green-flag.svg';
+  }
+  
   const motion = Scratch.vm.runtime.ext_scratch3_motion;
   const looks = Scratch.vm.runtime.ext_scratch3_looks;
+  
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Extension must run unsandboxed!');
   }
+  
   function spritebyname(name) {
     if (name == '_stage_') {
       return Scratch.vm.runtime.getTargetForStage();
@@ -15,6 +24,7 @@
       return Scratch.vm.runtime.getSpriteTargetByName(name);
     }
   }
+  
   class extension {
     getInfo() {
       return {
@@ -403,13 +413,13 @@
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       const speak = Scratch.Cast.toString(args.speak);
-      looks._say(speak,target);
+      looks._say(speak, target);
     }
     spritethink(args, util) {
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       const think = Scratch.Cast.toString(args.think);
-      Scratch.vm.runtime.emit('SAY', target, 'think', think);
+      looks.think({ target:target }, { MESSAGE:think })
     }
     spritegreenflag(args, util) {
       const target = spritebyname(args.spritemenu);
