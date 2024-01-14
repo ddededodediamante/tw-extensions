@@ -29,8 +29,9 @@
   class extension {
     getInfo() {
       return {
-        id: 'spriteblock',
+        id: 'spritecontrols',
         name: 'Sprite controls',
+        color1: '#737FFF',
         blocks: [
           {
             opcode: 'logsprite',
