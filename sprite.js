@@ -247,7 +247,7 @@
             arguments: {
               image: {
                 type: Scratch.ArgumentType.IMAGE,
-                dataURI: greenFlag
+                dataURI: clickFlag
               },
               spritemenu: {
                 type: Scratch.ArgumentType.STRING,
