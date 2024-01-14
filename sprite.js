@@ -3,8 +3,9 @@
   
   const rightIcon = 'https://turbowarp.org/static/blocks-media/default/rotate-right.svg';
   const leftIcon = 'https://turbowarp.org/static/blocks-media/default/rotate-left.svg';
-  
-  if (Scratch.extensions.isPenguinMod) {
+
+  const isPM = Scratch.extensions.isPenguinMod ?? false;
+  if (isPM) {
     var clickFlag = 'https://studio.penguinmod.com/static/blocks-media/blue-flag.svg';
   } else {
     var clickFlag = 'https://turbowarp.org/static/blocks-media/default/green-flag.svg';
@@ -214,6 +215,7 @@
             opcode: 'spritesay',
             blockType: Scratch.BlockType.COMMAND,
             text: 'sprite [spritemenu] say [speak]',
+            hideFromPalette: isPM,
             arguments: {
               speak: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -229,6 +231,7 @@
             opcode: 'spritethink',
             blockType: Scratch.BlockType.COMMAND,
             text: 'sprite [spritemenu] think [think]',
+            hideFromPalette: isPM,
             arguments: {
               think: {
                 type: Scratch.ArgumentType.NUMBER,
