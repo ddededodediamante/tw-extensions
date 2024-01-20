@@ -1,5 +1,18 @@
 (function(Scratch) {
   const unsandboxed = Scratch.extensions.unsandboxed;
+
+  function generateCondition(amount) {
+    const result = {};
+  
+    for (let i = 1; i <= amount; i++) {
+      const condition = `condition${i}`;
+      result[condition] = {
+        type: Scratch.ArgumentType.BOOLEAN
+      };
+    }
+  
+    return result;
+  }
 	
   function delayAndReturn(value, seconds) {
     return new Promise(resolve => {
@@ -78,6 +91,12 @@
               }
             }
           },
+          {
+            opcode: 'ifelse8',
+            blockType: Scratch.BlockType.CONDITIONAL,
+            text: ["if [condition] then", "else if [condition2]", "else if [condition3]", "else if [condition4]", "else if [condition5]", "else if [condition6]", "else if [condition7]", "else if [condition8]"],
+            branchCount: 8,
+            arguments: generateCondition(8),
 	]
       };
     }
@@ -88,13 +107,13 @@
       console.log(Scratch, util);
     }
     ifremake(args, util) {
-      const condition = Scratch.Cast.toBoolean(args.condition);
+      const condition = args.condition;
       if (condition) {
         util.startBranch(1, false);
       }
     }
     ifelseremake(args, util) {
-      const condition = Scratch.Cast.toBoolean(args.condition);
+      const condition = args.condition;
       if (condition) {
         util.startBranch(1, false);
       } else {
@@ -110,6 +129,11 @@
     }
     returnwithwait(args) {
       return delayAndReturn(args.string, args.time);
+    }
+    ifelse8(args, util) {
+      const c1 = args.condition; const c2 = args.condition2; const c3 = args.condition3; const c4 = args.condition4;
+      const c5 = args.condition5; const c6 = args.condition6; const c7 = args.condition7; const c8 = args.condition8;
+      util.startBranch(c1 ? 1 : c2 ? 2 : c3 ? 3 : c4 ? 4 : c5 ? 5 : c6 ? 6 : c7 ? 7 : c8 ? 8 : 0, false);
     }
   }
   Scratch.extensions.register(new test_ext());
