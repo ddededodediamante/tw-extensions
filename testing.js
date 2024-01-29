@@ -96,7 +96,8 @@
             blockType: Scratch.BlockType.CONDITIONAL,
             text: ["if [condition] then", "else if [condition2]", "else if [condition3]", "else if [condition4]", "else if [condition5]", "else if [condition6]", "else if [condition7]", "else if [condition8]"],
             branchCount: 8,
-            arguments: generateCondition(8),
+            arguments: generateCondition(8)
+	  }
 	]
       };
     }
