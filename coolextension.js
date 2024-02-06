@@ -30,6 +30,11 @@
             opcode: 'yourMomInSpanish',
             blockType: Scratch.BlockType.REPORTER,
             text: 'your mom in spanish'
+          },
+          {
+            opcode: 'yourMomInEnglish',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'your mom in english'
           }
         ]
       };
@@ -48,6 +53,9 @@
     }
     yourMomInSpanish() {
       return 'tu mama';
+    }
+    yourMomInEnglish() {
+      return 'your mom';
     }
   }
   Scratch.extensions.register(new cool_ext());
