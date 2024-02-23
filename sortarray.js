@@ -2,8 +2,8 @@
   class arraySorting {
     getInfo() {
       return {
-        id: 'ddesortarray',
-        name: 'Array sorting',
+        id: 'ddespecificarray',
+        name: 'Specific array utils',
         color1: '#72cf94',
         blocks: [
           {
