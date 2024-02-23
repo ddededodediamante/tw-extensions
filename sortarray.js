@@ -85,6 +85,17 @@
                 defaultValue: '[3,2,1]'
               }
             }
+          },
+          {
+            opcode: 'removeDuplicatedKeys',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'remove duplicated keys in [array]',
+            arguments: {
+              array: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '[1,2,3,2]'
+              }
+            }
           }
         ],
         menus: {
@@ -121,9 +132,11 @@
           [array[i], array[j]] = [array[j], array[i]];
         }
       };
+      
       while (array.some((el, index) => el === JSON.parse(args.array)[index])) {
         shuffleArray();
       }
+      
       return JSON.stringify(array);
     }
     sortReverse(args) {
@@ -134,6 +147,11 @@
       const array1 = JSON.parse(args.array1).reverse().join()
       const array2 = JSON.parse(args.array2).join()
       return array1 == array2;
+    }
+    removeDuplicatedKeys(args) {
+      const array = JSON.parse(args.array);
+      const removedArray = Array.from(new Set(array));
+      return JSON.stringify(removedArray);
     }
   }
   Scratch.extensions.register(new arraySorting());
