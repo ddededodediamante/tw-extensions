@@ -4,11 +4,12 @@
         return {
           id: 'ddenasamediasearch',
           name: 'Nasa Media Search',
+          color1: '#543275',
           blocks: [
             {
               opcode: 'searchNasaMedia',
               blockType: Scratch.BlockType.REPORTER,
-              text: 'search for images of [search]',
+              text: 'search for nasa images of [search]',
               arguments: {
                 search: {
                   type: Scratch.ArgumentType.STRING,
