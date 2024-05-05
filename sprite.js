@@ -216,7 +216,7 @@
             opcode: 'spritesay',
             blockType: Scratch.BlockType.COMMAND,
             text: 'sprite [spritemenu] say [speak]',
-            hideFromPalette: false,
+            hideFromPalette: isPM,
             arguments: {
               speak: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -232,7 +232,7 @@
             opcode: 'spritethink',
             blockType: Scratch.BlockType.COMMAND,
             text: 'sprite [spritemenu] think [think]',
-            hideFromPalette: false,
+            hideFromPalette: isPM,
             arguments: {
               think: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -414,12 +414,16 @@
       target.setDirection(target.direction-amount)
     }
     spritesay(args, util) {
+      if (isPM) throw new Error("This block does not work in PenguinMod.");
+
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       const speak = Scratch.Cast.toString(args.speak);
       looks._say(speak, target);
     }
     spritethink(args, util) {
+      if (isPM) throw new Error("This block does not work in PenguinMod.");
+      
       const target = spritebyname(args.spritemenu);
       if (!target) { return; }
       const think = Scratch.Cast.toString(args.think);
