@@ -216,7 +216,7 @@
             opcode: 'spritesay',
             blockType: Scratch.BlockType.COMMAND,
             text: 'sprite [spritemenu] say [speak]',
-            hideFromPalette: isPM,
+            hideFromPalette: false,
             arguments: {
               speak: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -232,7 +232,7 @@
             opcode: 'spritethink',
             blockType: Scratch.BlockType.COMMAND,
             text: 'sprite [spritemenu] think [think]',
-            hideFromPalette: isPM,
+            hideFromPalette: false,
             arguments: {
               think: {
                 type: Scratch.ArgumentType.NUMBER,
