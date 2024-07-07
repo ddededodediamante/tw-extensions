@@ -345,8 +345,7 @@
     }
     getrandomsprite() {
       const sprites = this.allsprites();
-      const array = sprites.map(obj => obj.value.getName());
-      return array[Math.floor(Math.random() * array.length)];
+      return sprites[Math.floor(Math.random() * sprites.length)];
     }
     getcurrentsprite(args, util) {
       return util.target.getName();
